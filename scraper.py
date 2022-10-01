@@ -8,7 +8,6 @@ import os
 driverpath = os.path.abspath(os.getcwd())+"/chromedriver.exe"
 s=Service(executable_path= str(driverpath))
 import requests
-
 class App:
     def __init__(self):
         # selenium chrome driver configuration
@@ -23,6 +22,7 @@ class App:
     
     def scrap(self,link)-> None:
         while(True):
+            SCROLL_PAUSE_TIME = 0.5
             self.driver.get(link)
             sleep(3)
             try:
@@ -59,6 +59,9 @@ class App:
                     }
                     scrapped_data.append(data_dict)
 
+                    self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                    time.sleep(SCROLL_PAUSE_TIME)
+
                 except:
                     count_id = count_id-1
                     pass
@@ -66,8 +69,10 @@ class App:
 
             url = "http://127.0.0.1:5000/update-record"
             data = scrapped_data
-            response = requests.post(url, json=data)
+            response = requests.post(url, json=data )
             print("Status Code", response.status_code)
+            # print(data)
+
             # time.sleep(300)
 
         def close(self)-> None:

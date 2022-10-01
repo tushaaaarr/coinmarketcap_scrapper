@@ -58,20 +58,20 @@ def query_records():
 def update_record():
     post_data = request.json
     for d_list in post_data:
-
         user_id = ScraperTable.objects.filter(custom_id=d_list['id']).first()
         if not user_id:
-            new_instance = ScraperTable(
-                custom_id=d_list['id'],
-                name=d_list['name'],
-                price=d_list['price'],
-                h_1=d_list['h_1'],
-                h_24=d_list['h_24'],
-                d_7=d_list['d_7'],
-                market_cap=d_list['market_cap'],
-                volume=d_list['volume'],
-                circulating_Supply=d_list['circulating_Supply'])
-            new_instance.save()
+            if not ScraperTable.objects.filter(name=d_list['name']).first():
+                new_instance = ScraperTable(
+                    custom_id=d_list['id'],
+                    name=d_list['name'],
+                    price=d_list['price'],
+                    h_1=d_list['h_1'],
+                    h_24=d_list['h_24'],
+                    d_7=d_list['d_7'],
+                    market_cap=d_list['market_cap'],
+                    volume=d_list['volume'],
+                    circulating_Supply=d_list['circulating_Supply'])
+                new_instance.save()
         else:
             user_id.update(name=d_list['name'],
                 price=d_list['price'],
@@ -81,9 +81,7 @@ def update_record():
                 market_cap=d_list['market_cap'],
                 volume=d_list['volume'],
                 circulating_Supply=d_list['circulating_Supply'])
-    return jsonify(user_id.to_json())
-
-
+    return jsonify({'status': 'succes'})
 
 
 if __name__ == "__main__":
