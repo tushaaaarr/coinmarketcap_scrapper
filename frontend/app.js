@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="App m-5">
-      <h4>Today's Cryptocurrency Prices by Market Cap</h4>
+      <h4>Today's Cryptocurrency Prices by Market Cap</h4>'
       <br></br>
       <Table striped bordered hover>
         <tbody>

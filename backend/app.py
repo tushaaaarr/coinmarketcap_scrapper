@@ -23,13 +23,10 @@ db.init_app(app)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-
-
 @app.route("/get_data")
 def hello():
    json_data ={'name':'tushar'}
    return json_data
-
 
 class ScraperTable(db.Document):
     custom_id =db.IntField()
@@ -43,7 +40,6 @@ class ScraperTable(db.Document):
     circulating_Supply = db.StringField()
     meta = {'strict': False}
 
-
 @app.route('/fetch-data', methods=['GET'])
 def query_records():
     user = ScraperTable.objects.all()
@@ -51,8 +47,6 @@ def query_records():
         return jsonify({'error': 'data not found'})
     else:
         return jsonify(user)
-
-
 
 @app.route('/update-record', methods=['POST'])
 def update_record():
